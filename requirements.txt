@@ -1,0 +1,11 @@
+pandas
+matplotlib
+requests
+plotly
+nbapy
+bs4
+numpy
+datetime
+streamlit
+nba-api>=1.4.1
+seaborn
