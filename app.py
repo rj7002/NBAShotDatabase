@@ -581,7 +581,8 @@ if szn != '':
                     game_id_nullable= id,
                     team_id=0,
                     player_id=0,
-                    context_measure_simple = 'FGA', #<-- Default is 'PTS' and will only return made shots, but we want all shot attempts
+                    context_measure_simple = 'FGA',
+                    season_type_all_star=type #<-- Default is 'PTS' and will only return made shots, but we want all shot attempts
                 )
                 content = json.loads(response.get_json())
 
