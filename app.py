@@ -710,9 +710,9 @@ if szn != '':
                 }
                     event_id = playid
                     game_id = id
-                    fevents_df = fevents_df[fevents_df['GAME_EVENT_ID'] == int(event_id)]
-                    shot_data = fevents_df
-                    shot_data = fevents_df
+                    events_df = events_df[events_df['actionNumber'] == int(event_id)]
+                    shot_data = events_df
+                    shot_data = events_df
                     text_all = (
                         shot_data['description'] +  # Assuming 'description' is already a string
                         ' (' + shot_data['shotDistance'].astype(str) + ' ft)'  # Convert shotDistance to string and concatenate
