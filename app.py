@@ -15,7 +15,7 @@ from datetime import date
 import plotly.graph_objects as go
 import numpy as np
 
-st.set_page_config(layout='wide',page_title="NBA Shot Database",page_icon=🏀)
+st.set_page_config(layout='wide',page_title="NBA Shot Database",page_icon='🏀')
 
 def display_player_image(player_id, width2, caption2):
     # Construct the URL for the player image using the player ID
