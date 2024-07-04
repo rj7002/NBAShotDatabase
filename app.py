@@ -15,7 +15,7 @@ from datetime import date
 import plotly.graph_objects as go
 import numpy as np
 
-st.set_page_config(layout='wide')
+st.set_page_config(layout='wide',page_title="NBA Shot Database",page_icon=🏀)
 
 def display_player_image(player_id, width2, caption2):
     # Construct the URL for the player image using the player ID
@@ -271,7 +271,7 @@ def draw_plotly_court(fig, fig_width=600, margins=10):
 
 
 
-st.markdown("<h1 style='text-align: center;'>NBA Play By Play Database</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>NBA Shot Database</h1>", unsafe_allow_html=True)
 # input_csv = 'nba_play_by_play.csv'  # Replace with your actual CSV file path
 # output_csv = 'nba_play_by_play.csv'  # Replace with desired output file path
 current_year = date.today().year
