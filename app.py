@@ -306,15 +306,16 @@ totals = st.sidebar.toggle('All NBA')
 # Create a selectbox for selecting a season
 szn = st.selectbox('Select a season', [''] + seasons)
 if szn != '':
-    typeszn = st.checkbox('Playoffs?')
-    if typeszn:
-        type = 'Playoffs'
-    else:
-        type = 'Regular Season'
+    
     szn2 = szn+1
     season = str(szn) + '-' + str(szn2)[2:]
     
     if totals:
+        typeszn = st.checkbox('Playoffs?')
+        if typeszn:
+            type = 'Playoffs'
+        else:
+            type = 'Regular Season'
         response = ShotChartDetail(
             team_id=0,
             player_id=0,
@@ -535,6 +536,11 @@ if szn != '':
 
 
     else:
+        typeszn = st.checkbox('Playoffs?')
+        if typeszn:
+            type = 'Playoffs'
+        else:
+            type = 'Regular Season'
         # Initialize the TeamGameLogs endpoint
         team_game_logs = TeamGameLogs(season_nullable=season,season_type_nullable=type)
 
@@ -595,16 +601,16 @@ if szn != '':
                 
                 
         
-                play_by_play = PlayByPlayV3(game_id=id)
-                play_by_play_data = play_by_play.get_data_frames()
-                events_df = play_by_play_data[0]
-                finalplaybyplay = ShotChartDetail(game_id_nullable=id,player_id=0,team_id=0)
-                finalplaybyplaydata = finalplaybyplay.get_data_frames()
-                finalevents = finalplaybyplaydata[0] 
+                # play_by_play = PlayByPlayV3(game_id=id)
+                # play_by_play_data = play_by_play.get_data_frames()
+                # events_df = play_by_play_data[0]
+                # finalplaybyplay = ShotChartDetail(game_id_nullable=id,player_id=0,team_id=0)
+                # finalplaybyplaydata = finalplaybyplay.get_data_frames()
+                # finalevents = finalplaybyplaydata[0] 
                 fevents_df['SHOT_RESULT'] = fevents_df['EVENT_TYPE'].apply(lambda x: x.split()[0])
                 
 
-                shots = finalevents['ACTION_TYPE'].unique()
+                shots = fevents_df['ACTION_TYPE'].unique()
                 Makes = st.sidebar.toggle('Make/Miss')
                 if Makes == 1:
                     makes = st.sidebar.selectbox('', ['Made', 'Missed'])
@@ -619,7 +625,7 @@ if szn != '':
                     shottype = st.sidebar.multiselect('', shots)
                     fevents_df = fevents_df[fevents_df['ACTION_TYPE'].isin(shottype)]
                 Points = st.sidebar.toggle('Points')
-                allpoints = finalevents['SHOT_TYPE'].unique()
+                allpoints = fevents_df['SHOT_TYPE'].unique()
                 if Points == 1:
                     points = st.sidebar.selectbox('', allpoints)
                     fevents_df = fevents_df[fevents_df['SHOT_TYPE'] == points]
@@ -637,7 +643,7 @@ if szn != '':
                 if Shotdist == 1:
                     shotdistance_min, shotdistance_max = st.sidebar.slider("Shot Distance", 0, 94, (0, 94))
                     fevents_df = fevents_df[(fevents_df['SHOT_DISTANCE'] >= shotdistance_min) & (fevents_df['SHOT_DISTANCE'] <= shotdistance_max)]
-                players = finalevents['PLAYER_NAME'].unique()
+                players = fevents_df['PLAYER_NAME'].unique()
                 Players = st.sidebar.toggle('Players')
                 if Players == 1:
                     playrs = st.sidebar.multiselect('',players)
@@ -674,6 +680,7 @@ if szn != '':
                     playerid = components[-2]
                     shot = components[1]
                     timeq = components[0]
+                    
                 
                     
                         
@@ -703,9 +710,9 @@ if szn != '':
                 }
                     event_id = playid
                     game_id = id
-                    events_df = events_df[events_df['actionNumber'] == int(event_id)]
-                    shot_data = events_df
-                    shot_data = events_df
+                    fevents_df = fevents_df[fevents_df['GAME_EVENT_ID'] == int(event_id)]
+                    shot_data = fevents_df
+                    shot_data = fevents_df
                     text_all = (
                         shot_data['description'] +  # Assuming 'description' is already a string
                         ' (' + shot_data['shotDistance'].astype(str) + ' ft)'  # Convert shotDistance to string and concatenate
